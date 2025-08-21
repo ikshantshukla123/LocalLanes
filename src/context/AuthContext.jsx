@@ -13,6 +13,16 @@ export const AuthProvider = ({ children }) => {
     return domain.toLowerCase().endsWith(".edu");
   };
 
+  const signOut = async () => {
+    try {
+      await supabase.auth.signOut();
+      setUser(null);
+      setAuthMessage("");
+    } catch (error) {
+      console.error("Error signing out:", error);
+    }
+  };
+
   useEffect(() => {
     // Check if already logged in
     supabase.auth.getUser().then(async ({ data }) => {
@@ -44,7 +54,7 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, setUser, authMessage, setAuthMessage }}>
+    <AuthContext.Provider value={{ user, setUser, authMessage, setAuthMessage, signOut }}>
       {children}
     </AuthContext.Provider>
   );
