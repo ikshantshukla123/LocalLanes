@@ -20,7 +20,7 @@ export default function Profile() {
         const { data, error } = await supabase
           .from('profiles')
           .select('*')
-          .eq('id', user.id)
+          .eq('email', user.email)
           .single()
 
         if (error) {
@@ -152,11 +152,11 @@ export default function Profile() {
                 </p>
               </div>
 
-              {/* Email */}
+              {/* Username */}
               <div className="backdrop-blur-sm bg-white/5 border border-white/10 rounded-xl p-4">
-                <h3 className="text-white/70 text-sm font-medium mb-2">Email</h3>
+                <h3 className="text-white/70 text-sm font-medium mb-2">Username</h3>
                 <p className="text-white text-lg font-semibold break-all">
-                  {profile.email || 'Not specified'}
+                  {profile.full_name || 'Not specified'}
                 </p>
               </div>
             </div>
