@@ -100,7 +100,7 @@ export default function AddProfile() {
             </h2>
 
             <div className="space-y-6">
-              <div>
+              <div className="">
                 <input
                   type="text"
                   placeholder="Full Name"
