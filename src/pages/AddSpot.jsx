@@ -12,24 +12,73 @@ const AddSpot = () => {
   const [subcategory, setSubcategory] = useState("");
   const [description, setDescription] = useState("");
   const [loading, setLoading] = useState(false);
+  const [submitError, setSubmitError] = useState("");
 
   // Dropdown options
   const categories = {
-    "Club": ["Cultural", "Technical", "Sports"],
-    "Fest": ["Annual", "Departmental", "Cultural"],
-    "Facility": ["Library", "Cafeteria", "Hostel", "Playground"],
+    "Food & Drinks": [
+      "Cafés",
+      "Restaurants",
+      "Street Food",
+      "Bakeries",
+      "Night Canteens",
+      "Juice / Tea / Coffee Spots",
+    ],
+    "Hangout & Vibes": [
+      "Lounges / Clubs",
+      "Rooftop Cafés",
+      "Gaming Zones",
+      "Music / Open Mic Places",
+      "Student Hangout Corners",
+    ],
+    "Shopping & Essentials": [
+      "Stationery & Print Shops",
+      "Grocery Stores",
+      "Thrift Shops / Boutiques",
+      "Tech / Mobile Repair",
+      "Pharmacies",
+    ],
+    "Outdoor & Chill Spots": [
+      "Parks / Gardens",
+      "Lakesides / Riversides",
+      "Street Murals / Graffiti Walls",
+      "Rooftops / Scenic Views",
+      "Walking / Cycling Routes",
+    ],
+    "Entertainment": [
+      "Movie Theatres",
+      "Sports Screens",
+      "Cultural Spaces",
+    ],
+    "Travel & Access": [
+      "Bus Stops",
+      "Auto/Taxi/Rickshaw Stands",
+      "Metro Stations",
+      "Rental Bikes / EVs",
+    ],
   };
 
   const handleSubmitSpot = async () => {
     setLoading(true);
+    setSubmitError("");
     try {
+      // Ensure user is logged in (avoid RLS policy failures)
+      const { data: userData, error: userError } = await supabase.auth.getUser();
+      if (userError) throw userError;
+      const currentUser = userData?.user;
+      if (!currentUser) {
+        setSubmitError("Please sign in to add a spot.");
+        alert("Please sign in to add a spot.");
+        return;
+      }
+
       const id = uuidv4();
 
       let imageUrls = [];
 
       // Upload first image if selected
       if (spotImage1) {
-        const { data: img1, error: err1 } = await supabase.storage
+        const { error: err1 } = await supabase.storage
           .from("SpotImages")
           .upload(`${id}/1-${spotImage1.name}`, spotImage1, {
             cacheControl: "3600",
@@ -40,12 +89,12 @@ const AddSpot = () => {
         const { data: publicUrl1 } = supabase.storage
           .from("SpotImages")
           .getPublicUrl(`${id}/1-${spotImage1.name}`);
-        imageUrls.push(publicUrl1.publicUrl);
+        if (publicUrl1?.publicUrl) imageUrls.push(publicUrl1.publicUrl);
       }
 
       // Upload second image if selected
       if (spotImage2) {
-        const { data: img2, error: err2 } = await supabase.storage
+        const { error: err2 } = await supabase.storage
           .from("SpotImages")
           .upload(`${id}/2-${spotImage2.name}`, spotImage2, {
             cacheControl: "3600",
@@ -56,19 +105,21 @@ const AddSpot = () => {
         const { data: publicUrl2 } = supabase.storage
           .from("SpotImages")
           .getPublicUrl(`${id}/2-${spotImage2.name}`);
-        imageUrls.push(publicUrl2.publicUrl);
+        if (publicUrl2?.publicUrl) imageUrls.push(publicUrl2.publicUrl);
       }
 
-      // Insert into Supabase table
+      // Insert into Supabase table (include user_id for RLS)
       const { error: insertError } = await supabase.from("spots").insert([
         {
           id,
+          user_id: currentUser.id,
           spot_name: spotName,
+        
           location,
           category,
           subcategory,
           description,
-          images: imageUrls, // store as array in Postgres
+          image_url: imageUrls, // array of public URLs
         },
       ]);
 
@@ -83,8 +134,10 @@ const AddSpot = () => {
       setSubcategory("");
       setDescription("");
     } catch (err) {
-      console.error("Error submitting spot:", err.message);
-      alert("Error submitting spot: " + err.message);
+      console.error("Error submitting spot:", err);
+      const message = err?.message || "Unknown error while submitting spot";
+      setSubmitError(message);
+      alert("Error submitting spot: " + message);
     } finally {
       setLoading(false);
     }
@@ -98,6 +151,11 @@ const AddSpot = () => {
         <div className="w-full max-w-md">
           <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-2xl shadow-2xl p-5">
             <h2 className="text-xl font-bold mb-4 text-center text-white drop-shadow-lg">Add a New Spot</h2>
+            {submitError && (
+              <div className="mb-3 text-sm text-red-200 bg-red-500/10 border border-red-500/30 rounded-md px-3 py-2">
+                {submitError}
+              </div>
+            )}
             <form className="space-y-3" onSubmit={(e) => e.preventDefault()}>
               {/* Spot Name */}
               <div>
@@ -116,7 +174,8 @@ const AddSpot = () => {
                 <input
                   className="w-full px-3 py-2 bg-white/20 border border-white/30 rounded-xl text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-white/40 focus:border-transparent transition-all duration-300 backdrop-blur-sm"
                   type="file"
-                  onChange={(e) => setSpotImage1(e.target.files[0])}
+                  accept="image/*"
+                  onChange={(e) => setSpotImage1(e.target.files?.[0] || null)}
                 />
               </div>
               <div>
@@ -124,7 +183,8 @@ const AddSpot = () => {
                 <input
                   className="w-full px-3 py-2 bg-white/20 border border-white/30 rounded-xl text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-white/40 focus:border-transparent transition-all duration-300 backdrop-blur-sm"
                   type="file"
-                  onChange={(e) => setSpotImage2(e.target.files[0])}
+                  accept="image/*"
+                  onChange={(e) => setSpotImage2(e.target.files?.[0] || null)}
                 />
               </div>
 
@@ -184,7 +244,7 @@ const AddSpot = () => {
                 <textarea
                   rows={3}
                   className="w-full px-3 py-2 bg-white/20 border border-white/30 rounded-xl text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-white/40 focus:border-transparent transition-all duration-300 backdrop-blur-sm"
-                  placeholder="Short description"
+                  placeholder="tip for visiting"
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
                 />

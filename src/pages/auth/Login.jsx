@@ -9,6 +9,8 @@ const Login = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [submitting, setSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [forgotMode, setForgotMode] = useState(false);
+  const [resetSentTo, setResetSentTo] = useState("");
 
   useEffect(() => {
     if (user) navigate("/home", { replace: true });
@@ -44,6 +46,29 @@ const Login = () => {
         return;
       }
       navigate("/home", { replace: true });
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  const handleForgot = async (e) => {
+    e.preventDefault();
+    setSubmitting(true);
+    setErrorMessage("");
+    try {
+      if (!isEduEmail(formData.email)) {
+        setErrorMessage("Only .edu email addresses can reset password.");
+        return;
+      }
+      const { error } = await supabase.auth.resetPasswordForEmail(formData.email, {
+        redirectTo: `${window.location.origin}/`,
+      });
+      if (error) {
+        setErrorMessage(error.message);
+        return;
+      }
+      setResetSentTo(formData.email);
+      setForgotMode(false);
     } finally {
       setSubmitting(false);
     }
@@ -88,8 +113,8 @@ const Login = () => {
         <div className="relative w-full max-w-md mx-auto">
           <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500/30 via-indigo-500/30 to-purple-500/30 rounded-3xl blur-2xl"></div>
           <div className="relative backdrop-blur-xl bg-white/10 border border-white/20 shadow-2xl rounded-3xl p-8">
-            <h1 className="text-2xl font-semibold text-white text-center">Welcome back</h1>
-            <p className="text-slate-300 text-center mt-1">Sign in to your account</p>
+            <h1 className="text-2xl font-semibold text-white text-center">{forgotMode ? 'Reset password' : 'Welcome back'}</h1>
+            <p className="text-slate-300 text-center mt-1">{forgotMode ? 'Enter your .edu email to receive reset link' : 'Sign in to your account'}</p>
 
             {(authMessage || errorMessage) && (
               <div className="mt-4 text-sm text-red-200 bg-red-500/10 border border-red-500/30 rounded-md px-3 py-2">
@@ -97,7 +122,13 @@ const Login = () => {
               </div>
             )}
 
-            <form onSubmit={handleLogin} className="mt-6 flex flex-col gap-4">
+            {resetSentTo && (
+              <div className="mt-4 text-sm text-emerald-200 bg-emerald-500/10 border border-emerald-500/30 rounded-md px-3 py-2">
+                Password reset link sent to {resetSentTo}
+              </div>
+            )}
+
+            <form onSubmit={forgotMode ? handleForgot : handleLogin} className="mt-6 flex flex-col gap-4">
               <div>
                 <label className="block text-slate-200 text-sm mb-1">College Email (.edu)</label>
                 <input
@@ -109,26 +140,41 @@ const Login = () => {
                   required
                 />
               </div>
-              <div>
-                <label className="block text-slate-200 text-sm mb-1">Password</label>
-                <input
-                  type="password"
-                  name="password"
-                  placeholder="••••••••"
-                  onChange={handleChange}
-                  className="w-full px-4 py-2 rounded-xl bg-white/10 text-white placeholder-slate-300 border border-white/20 focus:outline-none focus:ring-2 focus:ring-cyan-400/50"
-                  required
-                />
-              </div>
+
+              {!forgotMode && (
+                <div>
+                  <label className="block text-slate-200 text-sm mb-1">Password</label>
+                  <input
+                    type="password"
+                    name="password"
+                    placeholder="••••••••"
+                    onChange={handleChange}
+                    className="w-full px-4 py-2 rounded-xl bg-white/10 text-white placeholder-slate-300 border border-white/20 focus:outline-none focus:ring-2 focus:ring-cyan-400/50"
+                    required
+                  />
+                </div>
+              )}
 
               <button
                 type="submit"
                 disabled={submitting}
                 className="mt-2 inline-flex justify-center items-center gap-2 w-full py-2.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-white font-medium transition disabled:opacity-60 disabled:cursor-not-allowed"
               >
-                {submitting ? "Signing in..." : "Sign in"}
+                {submitting ? (forgotMode ? 'Sending...' : 'Signing in...') : (forgotMode ? 'Send reset link' : 'Sign in')}
               </button>
             </form>
+
+            <div className="mt-4 text-center">
+              {!forgotMode ? (
+                <button onClick={() => setForgotMode(true)} className="text-cyan-300 hover:text-cyan-200 text-sm underline">
+                  Forgot your password?
+                </button>
+              ) : (
+                <button onClick={() => setForgotMode(false)} className="text-cyan-300 hover:text-cyan-200 text-sm underline">
+                  Back to sign in
+                </button>
+              )}
+            </div>
 
             <div className="flex items-center my-6">
               <div className="flex-1 h-px bg-white/20"></div>

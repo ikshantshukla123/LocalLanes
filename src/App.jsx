@@ -17,11 +17,19 @@ const App = () => {
           {/* Public Routes */}
           <Route path="/" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
-          <Route path="/AddSpot" element={<AddSpot />} />
+          
+          {/* Protected Routes */}
+          <Route
+            path="/AddSpot"
+            element={
+              <ProtectedRoute>
+                <AddSpot />
+              </ProtectedRoute>
+            }
+          />
           <Route path="/Profile" element={<Profile />} />
           <Route path="/AddProfile" element={<AddProfile/>} />
 
-          {/* Protected Route */}
           <Route
             path="/home"
             element={
