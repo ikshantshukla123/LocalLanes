@@ -29,7 +29,7 @@ export default function NavBar() {
           </Link>
           
           
-          <Link to="/about" className='relative inline-block px-2 py-1 transition-all duration-200 hover:text-cyan-400 hover:-translate-y-0.5 group'>
+          <Link to="/NotFound" className='relative inline-block px-2 py-1 transition-all duration-200 hover:text-cyan-400 hover:-translate-y-0.5 group'>
             <span>Additional</span>
             <span className='absolute left-0 bottom-0 h-0.5 w-0 bg-cyan-400 transition-all duration-300 group-hover:w-full'></span>
           </Link>
