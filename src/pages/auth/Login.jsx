@@ -97,9 +97,16 @@ const Login = () => {
         
         {/* LEFT SIDE - Description */}
         <div className="text-center md:text-left space-y-6 px-4">
-          <h2 className="text-5xl md:text-6xl font-extrabold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-indigo-300 to-purple-300 animate-gradient-x">
-            Local-Lanes
-          </h2>
+          <div className="flex items-center justify-center md:justify-start gap-4">
+            <img 
+              src="/localLanesLogo.png" 
+              alt="Local-Lanes Logo" 
+              className="w-16 h-16 object-contain"
+            />
+            <h2 className="text-5xl md:text-6xl font-extrabold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-indigo-300 to-purple-300 animate-gradient-x">
+              Local-Lanes
+            </h2>
+          </div>
           <p className="text-slate-300 text-lg">
             Discover the <span className="text-cyan-300 font-semibold">best hangout spots</span>, gyms, restaurants, and hidden gems around your college.
           </p>

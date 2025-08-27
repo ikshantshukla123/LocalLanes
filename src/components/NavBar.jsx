@@ -19,7 +19,7 @@ export default function NavBar() {
     <div className='sticky top-0 z-30 backdrop-blur bg-gray-800/90 shadow-md'>
       <div className='flex justify-between items-center text-white pt-4 pb-4'>
         <div className='flex items-center pl-10'>
-          <img src="body.png" alt="" height={30} width={30}/>
+          <img src="localLanesLogo.png" alt="" height={40} width={40}/>
           <h1 className='ml-2'>Local Lanes</h1>
         </div>
         <div className='flex justify-evenly items-center w-1/2 pr-2'>
