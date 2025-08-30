@@ -2,6 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import NavBar from '../components/NavBar'
+
 import { 
   Home, 
   MapPin, 
@@ -221,6 +222,7 @@ export default function NotFound() {
                   Join Community
                 </Link>
               )}
+            
             </div>
           </div>
         </div>
@@ -229,9 +231,43 @@ export default function NotFound() {
       {/* Footer */}
       <footer className="py-8 px-4 border-t border-white/10">
         <div className="max-w-6xl mx-auto text-center">
+
+
           <p className="text-gray-400 text-sm">
-            © 2024 Local-Lanes. Made with ❤️ for college students everywhere.
+            © 2025 Local-Lanes. Made with ❤️ for college students everywhere.
           </p>
+          <div className="flex space-x-6">
+  <span className="text-gray-400 text-md"> Contributors:</span>
+        <a
+          href="https://www.linkedin.com/in/ikshant-shukla-097771327/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="w-8 h-8 flex items-center justify-center rounded-full bg-blue-600 text-white text-xl font-bold shadow-lg hover:bg-blue-700 transition duration-300"
+        >
+          <img src="/p1.avif"  className="w-full h-full rounded-full object-cover"></img>
+        </a>
+
+       
+        <a
+          href="https://www.linkedin.com/in/harshit-tomar-5b4889308/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="w-8 h-8 flex items-center justify-center rounded-full bg-blue-600 text-white text-xl font-bold shadow-lg hover:bg-blue-700 transition duration-300"
+        >
+          <img src="/p2.avif"  className="w-full h-full rounded-full object-cover"></img>
+        </a>
+
+ 
+        <a
+          href="https://www.linkedin.com/in/kritika-tyagi-910bb3319/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="w-8 h-8 flex items-center justify-center rounded-full bg-blue-600 text-white text-xl font-bold shadow-lg hover:bg-blue-700 transition duration-300"
+        >
+          <img src="/p3.png"  className="w-full h-full rounded-full object-cover"></img>
+        </a>
+        
+      </div>
         </div>
       </footer>
     </div>
