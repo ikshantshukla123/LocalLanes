@@ -3,6 +3,7 @@ import { MapPin, Tag, Info, Calendar, Type } from "lucide-react"
 import NavBar from '../components/NavBar'
 import { supabase } from '../supaBaseClient'
 import { SPOT_CATEGORIES } from '../utils/Category'
+import { useAuth } from '../context/AuthContext'
 
 const coerceToUrlArray = (value) => {
   if (!value) return []
@@ -34,6 +35,7 @@ const formatDate = (ts) => {
 }
 
 const Home = () => {
+  const { user } = useAuth()
   const [spots, setSpots] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
@@ -100,8 +102,14 @@ const Home = () => {
   }, [])
 
   const filteredSpots = useMemo(() => {
-    if (selectedCategory === 'All') return spots
-    return spots.filter((s) => (s.category || '').toLowerCase() === selectedCategory.toLowerCase())
+    let filtered = spots
+    
+    // Filter by category
+    if (selectedCategory !== 'All') {
+      filtered = filtered.filter((s) => (s.category || '').toLowerCase() === selectedCategory.toLowerCase())
+    }
+    
+    return filtered
   }, [spots, selectedCategory])
 
   const handleNextImage = (spotId, imagesLength) => {
@@ -126,7 +134,9 @@ const Home = () => {
       <section className="relative py-16 md:py-20 bg-gradient-to-b from-slate-900 to-black">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-10 md:mb-14">
-            <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">Explore Best  Spots Near Your colleges</h1>
+            <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
+              Explore Best Spots Near Your College
+            </h1>
             <p className="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto">
               Discover the best restaurants, cafes and bars shared by everyone in your college
             </p>
@@ -137,19 +147,19 @@ const Home = () => {
       <section className="py-6 bg-black/60 sticky top-[64px] z-20 backdrop-blur supports-[backdrop-filter]:bg-black/40">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-wrap justify-center gap-3 md:gap-4">
-            {categories.map((category) => (
-              <button
-                key={category}
-                onClick={() => setSelectedCategory(category)}
-                className={`px-5 py-2.5 rounded-full font-semibold transition-all duration-300 ${
-                  selectedCategory === category
-                    ? 'bg-gradient-to-r from-cyan-500 to-indigo-500 text-white'
-                    : 'bg-white/10 backdrop-blur-sm text-white border border-white/20 hover:bg-white/20'
-                }`}
-              >
-                {category}
-              </button>
-            ))}
+                         {categories.map((category) => (
+               <button
+                 key={category}
+                 onClick={() => setSelectedCategory(category)}
+                 className={`px-5 py-2.5 rounded-full font-semibold transition-all duration-300 ${
+                   selectedCategory === category
+                     ? 'bg-gradient-to-r from-cyan-500 to-indigo-500 text-white'
+                     : 'bg-white/10 backdrop-blur-sm text-white border border-white/20 hover:bg-white/20'
+                 }`}
+               >
+                 {category}
+               </button>
+             ))}
           </div>
         </div>
       </section>
@@ -268,16 +278,18 @@ const Home = () => {
   {/* Bottom actions */}
   <div className="mt-6 flex justify-between items-center">
     <span className="text-xs text-white/60">Hover to zoom • Use arrows</span>
-    {currentImage && (
-      <a
-        href={currentImage}
-        target="_blank"
-        rel="noreferrer"
-        className="bg-gradient-to-r from-cyan-500 to-indigo-500 text-white px-4 py-2 rounded-full text-sm font-semibold hover:from-cyan-600 hover:to-indigo-600 transition-all duration-300"
-      >
-        View Image
-      </a>
-    )}
+    <div className="flex items-center gap-2">
+      {currentImage && (
+        <a
+          href={currentImage}
+          target="_blank"
+          rel="noreferrer"
+          className="bg-gradient-to-r from-cyan-500 to-indigo-500 text-white px-4 py-2 rounded-full text-sm font-semibold hover:from-cyan-600 hover:to-indigo-600 transition-all duration-300"
+        >
+          View Image
+        </a>
+      )}
+    </div>
   </div>
 </div>
                   </div>

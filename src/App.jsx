@@ -7,6 +7,7 @@ import ResetPassword from "./pages/auth/ResetPassword";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import ProtectedRoute from "./pages/auth/ProtectedRoute";
 import AddSpot from "./pages/AddSpot"; // Importing AddSpot page
+import EditSpot from "./pages/EditSpot"; // Importing EditSpot page
 import Profile from "./pages/Profile";
 import AddProfile from "./pages/AddProfile";
 import NotFound from "./pages/NotFound";
@@ -27,6 +28,14 @@ const App = () => {
             element={
               <ProtectedRoute>
                 <AddSpot />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/edit-spot/:id"
+            element={
+              <ProtectedRoute>
+                <EditSpot />
               </ProtectedRoute>
             }
           />

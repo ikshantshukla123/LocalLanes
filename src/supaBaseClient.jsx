@@ -40,8 +40,10 @@ let supabaseInstance;
 try {
   if (!supabaseUrl || !supabaseKey) {
     console.error("Missing Supabase env vars. Define VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY in your .env");
+    console.log("Current env vars:", { supabaseUrl, supabaseKey: supabaseKey ? "***" : "undefined" });
     supabaseInstance = createStubSupabase();
   } else {
+    console.log("Initializing Supabase client with URL:", supabaseUrl);
     supabaseInstance = createClient(supabaseUrl, supabaseKey);
   }
 } catch (err) {
