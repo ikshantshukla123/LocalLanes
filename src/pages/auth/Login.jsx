@@ -96,7 +96,7 @@ const Login = () => {
       <div className="w-full max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
         
         {/* LEFT SIDE - Description */}
-        <div className="text-center lg:text-left space-y-4 sm:space-y-6 px-4 order-2 lg:order-1">
+        <div className="text-center lg:text-left space-y-4 sm:space-y-6 px-4 order-1 lg:order-1">
           <div className="flex items-center justify-center lg:justify-start gap-4 sm:gap-6">
             <div className="relative group">
               <div className="absolute -inset-3 sm:-inset-4 bg-gradient-to-r from-cyan-500/30 via-indigo-500/30 to-purple-500/30 rounded-full blur-xl sm:blur-2xl group-hover:blur-2xl sm:group-hover:blur-3xl transition-all duration-500"></div>

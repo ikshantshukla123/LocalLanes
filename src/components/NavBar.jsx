@@ -242,33 +242,44 @@ export default function NavBar() {
                   
                   {/* Profile Dropdown Menu */}
                   {isDropdownOpen && (
-                    <div className="absolute right-0 top-full mt-2 w-64 bg-white/10 backdrop-blur-xl border border-white/20 rounded-xl shadow-2xl z-50">
-                      <div className="p-4">
-                        <div className="flex items-center gap-3 mb-4 pb-3 border-b border-white/10">
-                          <div className="w-10 h-10 bg-gradient-to-r from-cyan-400 to-indigo-400 rounded-full flex items-center justify-center text-white font-semibold">
-                            {user?.email?.charAt(0).toUpperCase() || 'U'}
+                    <div className="absolute right-0 top-full mt-2 w-64 bg-gradient-to-br from-gray-900/95 to-gray-800/95 backdrop-blur-xl border border-gray-600/30 rounded-2xl shadow-2xl z-50 overflow-hidden">
+                      {/* Header with gradient accent */}
+                      <div className="bg-gradient-to-r from-cyan-500/20 to-indigo-500/20 p-4 border-b border-gray-600/30">
+                        <div className="flex items-center gap-3">
+                          <div className="relative">
+                            <div className="absolute -inset-1 bg-gradient-to-r from-cyan-400 to-indigo-400 rounded-full blur-sm opacity-50"></div>
+                            <div className="relative w-12 h-12 bg-gradient-to-r from-cyan-400 to-indigo-400 rounded-full flex items-center justify-center text-white font-bold text-lg shadow-lg">
+                              {user?.email?.charAt(0).toUpperCase() || 'U'}
+                            </div>
                           </div>
-                          <div>
-                            <p className="text-white font-medium text-sm">{user?.email?.split('@')[0]}</p>
-                            <p className="text-white/70 text-xs">{user?.email}</p>
+                          <div className="flex-1 min-w-0">
+                            <p className="text-white font-semibold text-sm truncate">{user?.email?.split('@')[0]}</p>
+                            <p className="text-gray-300 text-xs truncate">{user?.email}</p>
                           </div>
                         </div>
-                        
+                      </div>
+                      
+                      {/* Menu items */}
+                      <div className="p-2">
                         <div className="space-y-1">
                           <Link
                             to="/Profile"
-                            className="flex items-center gap-3 px-3 py-2 rounded-lg text-white hover:bg-white/10 transition-all duration-200 text-sm"
+                            className="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-200 hover:text-white hover:bg-gradient-to-r hover:from-cyan-500/10 hover:to-indigo-500/10 transition-all duration-300 text-sm font-medium group"
                             onClick={() => setIsDropdownOpen(false)}
                           >
-                            <User className="w-4 h-4" />
+                            <div className="p-1.5 rounded-lg bg-gray-700/50 group-hover:bg-cyan-500/20 transition-all duration-300">
+                              <User className="w-4 h-4" />
+                            </div>
                             <span>Profile</span>
                           </Link>
                           
                           <button
                             onClick={handleSignOut}
-                            className="flex items-center gap-3 px-3 py-2 rounded-lg text-red-300 hover:bg-red-500/10 transition-all duration-200 text-sm w-full text-left"
+                            className="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-300 hover:text-red-200 hover:bg-gradient-to-r hover:from-red-500/10 hover:to-red-600/10 transition-all duration-300 text-sm font-medium w-full text-left group"
                           >
-                            <LogOut className="w-4 h-4" />
+                            <div className="p-1.5 rounded-lg bg-gray-700/50 group-hover:bg-red-500/20 transition-all duration-300">
+                              <LogOut className="w-4 h-4" />
+                            </div>
                             <span>Sign Out</span>
                           </button>
                         </div>
