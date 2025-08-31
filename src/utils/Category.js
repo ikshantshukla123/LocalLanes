@@ -1,5 +1,4 @@
 export const SPOT_CATEGORIES = [
-  "All",
   "Food & Drinks",
   "Hangout & Vibes",
   "Shopping & Essentials",
