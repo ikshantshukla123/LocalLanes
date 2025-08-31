@@ -1,13 +1,9 @@
-// src/utils/Category.js
-
-// Define categories for spots
 export const SPOT_CATEGORIES = [
-  "Cafe",
-  "Restaurant",
-  "Bar",
-  "Library",
-  "Park",
-  "Mall",
-  "Gym",
-  "Theatre",
+  "All",
+  "Food & Drinks",
+  "Hangout & Vibes",
+  "Shopping & Essentials",
+  "Outdoor & Chill Spots",
+  "Entertainment",
+  "Travel & Access",
 ];
