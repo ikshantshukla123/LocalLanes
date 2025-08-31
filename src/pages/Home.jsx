@@ -146,26 +146,25 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Enhanced Category Filter */}
-      <section className="py-8 bg-black/80 sticky top-16 md:top-20 z-20 backdrop-blur-xl border-b border-white/10 shadow-2xl">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-wrap justify-center gap-2 sm:gap-3 md:gap-4">
-            {categories.map((category) => (
-              <button
-                key={category}
-                onClick={() => setSelectedCategory(category)}
-                className={`px-3 py-2 sm:px-4 sm:py-2.5 md:px-6 md:py-3 rounded-full font-medium sm:font-semibold text-xs sm:text-sm md:text-base transition-all duration-300 transform hover:scale-105 ${
-                  selectedCategory === category
-                    ? 'bg-gradient-to-r from-cyan-500 to-indigo-500 text-white shadow-lg shadow-cyan-500/25'
-                    : 'bg-white/10 backdrop-blur-sm text-white border border-white/20 hover:bg-white/20 hover:border-cyan-400/50 hover:shadow-lg hover:shadow-cyan-500/10'
-                }`}
-              >
-                {category}
-              </button>
-            ))}
-          </div>
-        </div>
-      </section>
+      <section className="py-4 bg-black/80 sticky top-16 md:top-20 z-20 backdrop-blur-xl border-b border-white/10 shadow-2xl">
+  <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-6">
+    <div className="flex flex-wrap justify-center gap-2 sm:gap-3">
+      {categories.map((category) => (
+        <button
+          key={category}
+          onClick={() => setSelectedCategory(category)}
+          className={`px-2.5 py-1.5 sm:px-3 sm:py-2 rounded-full font-normal sm:font-medium text-[10px] sm:text-xs md:text-sm transition-all duration-300 transform hover:scale-105 ${
+            selectedCategory === category
+              ? 'bg-gradient-to-r from-cyan-500 to-indigo-500 text-white shadow-md shadow-cyan-500/25'
+              : 'bg-white/10 backdrop-blur-sm text-white border border-white/20 hover:bg-white/20 hover:border-cyan-400/50 hover:shadow-md hover:shadow-cyan-500/10'
+          }`}
+        >
+          {category}
+        </button>
+      ))}
+    </div>
+  </div>
+</section>
 
       <section className="py-10 md:py-16 bg-gradient-to-b from-black to-slate-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

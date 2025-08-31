@@ -195,10 +195,10 @@ const AddSpot = () => {
 
               {/* Location */}
               <div>
-                <label className="block text-white/80 text-sm md:text-base mb-2 font-medium">Location</label>
+                <label className="block text-white/80 text-sm md:text-base mb-2 font-medium">Address</label>
                 <input
                   className="w-full px-4 py-3 md:py-4 bg-white/20 border border-white/30 rounded-xl text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-white/40 focus:border-transparent transition-all duration-300 backdrop-blur-sm text-base"
-                  placeholder="Enter spot location"
+                  placeholder="Enter spot address"
                   value={location}
                   onChange={(e) => setLocation(e.target.value)}
                 />
