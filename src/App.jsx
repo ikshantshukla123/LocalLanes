@@ -1,4 +1,5 @@
 import React from "react";
+import { Analytics } from '@vercel/analytics/react';
 import { AuthProvider } from "./context/AuthContext";
 import Home from "./pages/Home";
 import Login from "./pages/auth/Login";
@@ -52,6 +53,7 @@ const App = () => {
           />
         </Routes>
       </Router>
+          <Analytics />
     </AuthProvider>
   );
 };
