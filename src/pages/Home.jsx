@@ -15,7 +15,9 @@ const coerceToUrlArray = (value) => {
         const parsed = JSON.parse(trimmed)
         if (Array.isArray(parsed)) return parsed.filter(Boolean)
         if (typeof parsed === 'string') return [parsed]
-      } catch (_) {}
+      } catch {
+        // Ignore parsing errors
+      }
     }
     if (trimmed.includes(',')) return trimmed.split(',').map((s) => s.trim()).filter(Boolean)
     return [trimmed]
@@ -35,7 +37,7 @@ const formatDate = (ts) => {
 }
 
 const Home = () => {
-  const { user } = useAuth()
+  const { user: _user } = useAuth()
   const [spots, setSpots] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
@@ -144,22 +146,23 @@ const Home = () => {
         </div>
       </section>
 
-      <section className="py-6 bg-black/60 sticky top-[64px] z-20 backdrop-blur supports-[backdrop-filter]:bg-black/40">
+      {/* Enhanced Category Filter */}
+      <section className="py-8 bg-black/80 sticky top-16 md:top-20 z-20 backdrop-blur-xl border-b border-white/10 shadow-2xl">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-wrap justify-center gap-3 md:gap-4">
-                         {categories.map((category) => (
-               <button
-                 key={category}
-                 onClick={() => setSelectedCategory(category)}
-                 className={`px-5 py-2.5 rounded-full font-semibold transition-all duration-300 ${
-                   selectedCategory === category
-                     ? 'bg-gradient-to-r from-cyan-500 to-indigo-500 text-white'
-                     : 'bg-white/10 backdrop-blur-sm text-white border border-white/20 hover:bg-white/20'
-                 }`}
-               >
-                 {category}
-               </button>
-             ))}
+          <div className="flex flex-wrap justify-center gap-2 sm:gap-3 md:gap-4">
+            {categories.map((category) => (
+              <button
+                key={category}
+                onClick={() => setSelectedCategory(category)}
+                className={`px-3 py-2 sm:px-4 sm:py-2.5 md:px-6 md:py-3 rounded-full font-medium sm:font-semibold text-xs sm:text-sm md:text-base transition-all duration-300 transform hover:scale-105 ${
+                  selectedCategory === category
+                    ? 'bg-gradient-to-r from-cyan-500 to-indigo-500 text-white shadow-lg shadow-cyan-500/25'
+                    : 'bg-white/10 backdrop-blur-sm text-white border border-white/20 hover:bg-white/20 hover:border-cyan-400/50 hover:shadow-lg hover:shadow-cyan-500/10'
+                }`}
+              >
+                {category}
+              </button>
+            ))}
           </div>
         </div>
       </section>

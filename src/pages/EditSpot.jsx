@@ -73,6 +73,7 @@ const EditSpot = () => {
       "Street Murals / Graffiti Walls",
       "Rooftops / Scenic Views",
       "Walking / Cycling Routes",
+      "Gym/Sports",
     ],
     "Entertainment": [
       "Movie Theatres",

@@ -1,9 +1,13 @@
 import React, { useState } from "react";
-import { supabase } from "../supaBaseClient"; // adjust import as per your setup
+import { supabase } from "../supaBaseClient";
 import { v4 as uuidv4 } from "uuid";
 import NavBar from "../components/NavBar";
+import { useAuth } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const AddSpot = () => {
+  const { user } = useAuth();
+  const navigate = useNavigate();
   const [spotName, setSpotName] = useState("");
   const [spotImage1, setSpotImage1] = useState(null);
   const [spotImage2, setSpotImage2] = useState(null);
@@ -30,6 +34,7 @@ const AddSpot = () => {
       "Gaming Zones",
       "Music / Open Mic Places",
       "Student Hangout Corners",
+      "Gym/sports",
     ],
     "Shopping & Essentials": [
       "Stationery & Print Shops",
@@ -114,7 +119,6 @@ const AddSpot = () => {
           id,
           user_id: currentUser.id,
           spot_name: spotName,
-        
           location,
           category,
           subcategory,
@@ -144,24 +148,25 @@ const AddSpot = () => {
   };
 
   return (
-
     <div className="min-h-screen bg-cover bg-top bg-no-repeat" style={{ backgroundImage: "url('/addBack.png')" }}>
       <NavBar />
-      <div className="flex items-center justify-center min-h-screen px-4 py-4">
-        <div className="w-full max-w-md">
-          <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-2xl shadow-2xl p-5">
-            <h2 className="text-xl font-bold mb-4 text-center text-white drop-shadow-lg">Add a New Spot</h2>
+      <div className="flex items-center justify-center min-h-screen px-4 py-8 md:py-12">
+        <div className="w-full max-w-md lg:max-w-lg">
+          <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-2xl shadow-2xl p-6 md:p-8">
+            <h2 className="text-2xl md:text-3xl font-bold mb-6 md:mb-8 text-center text-white drop-shadow-lg">
+              Add a New Spot
+            </h2>
             {submitError && (
-              <div className="mb-3 text-sm text-red-200 bg-red-500/10 border border-red-500/30 rounded-md px-3 py-2">
+              <div className="mb-4 md:mb-6 text-sm text-red-200 bg-red-500/10 border border-red-500/30 rounded-lg px-4 py-3">
                 {submitError}
               </div>
             )}
-            <form className="space-y-3" onSubmit={(e) => e.preventDefault()}>
+            <form className="space-y-4 md:space-y-6" onSubmit={(e) => e.preventDefault()}>
               {/* Spot Name */}
               <div>
-                <label className="block text-white/80 text-sm mb-2">Spot Name</label>
+                <label className="block text-white/80 text-sm md:text-base mb-2 font-medium">Spot Name</label>
                 <input
-                  className="w-full px-3 py-2 bg-white/20 border border-white/30 rounded-xl text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-white/40 focus:border-transparent transition-all duration-300 backdrop-blur-sm"
+                  className="w-full px-4 py-3 md:py-4 bg-white/20 border border-white/30 rounded-xl text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-white/40 focus:border-transparent transition-all duration-300 backdrop-blur-sm text-base"
                   placeholder="Enter spot name"
                   value={spotName}
                   onChange={(e) => setSpotName(e.target.value)}
@@ -170,18 +175,18 @@ const AddSpot = () => {
 
               {/* Spot Images */}
               <div>
-                <label className="block text-white/80 text-sm mb-2">Spot Image 1</label>
+                <label className="block text-white/80 text-sm md:text-base mb-2 font-medium">Spot Image 1</label>
                 <input
-                  className="w-full px-3 py-2 bg-white/20 border border-white/30 rounded-xl text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-white/40 focus:border-transparent transition-all duration-300 backdrop-blur-sm"
+                  className="w-full px-4 py-3 md:py-4 bg-white/20 border border-white/30 rounded-xl text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-white/40 focus:border-transparent transition-all duration-300 backdrop-blur-sm text-sm md:text-base file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-white/30 file:text-white hover:file:bg-white/40 cursor-pointer"
                   type="file"
                   accept="image/*"
                   onChange={(e) => setSpotImage1(e.target.files?.[0] || null)}
                 />
               </div>
               <div>
-                <label className="block text-white/80 text-sm mb-2">Spot Image 2</label>
+                <label className="block text-white/80 text-sm md:text-base mb-2 font-medium">Spot Image 2 (Optional)</label>
                 <input
-                  className="w-full px-3 py-2 bg-white/20 border border-white/30 rounded-xl text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-white/40 focus:border-transparent transition-all duration-300 backdrop-blur-sm"
+                  className="w-full px-4 py-3 md:py-4 bg-white/20 border border-white/30 rounded-xl text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-white/40 focus:border-transparent transition-all duration-300 backdrop-blur-sm text-sm md:text-base file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-white/30 file:text-white hover:file:bg-white/40 cursor-pointer"
                   type="file"
                   accept="image/*"
                   onChange={(e) => setSpotImage2(e.target.files?.[0] || null)}
@@ -190,9 +195,9 @@ const AddSpot = () => {
 
               {/* Location */}
               <div>
-                <label className="block text-white/80 text-sm mb-2">Location</label>
+                <label className="block text-white/80 text-sm md:text-base mb-2 font-medium">Location</label>
                 <input
-                  className="w-full px-3 py-2 bg-white/20 border border-white/30 rounded-xl text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-white/40 focus:border-transparent transition-all duration-300 backdrop-blur-sm"
+                  className="w-full px-4 py-3 md:py-4 bg-white/20 border border-white/30 rounded-xl text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-white/40 focus:border-transparent transition-all duration-300 backdrop-blur-sm text-base"
                   placeholder="Enter spot location"
                   value={location}
                   onChange={(e) => setLocation(e.target.value)}
@@ -201,9 +206,9 @@ const AddSpot = () => {
 
               {/* Category Dropdown */}
               <div>
-                <label className="block text-white/80 text-sm mb-2">Category</label>
+                <label className="block text-white/80 text-sm md:text-base mb-2 font-medium">Category</label>
                 <select
-                  className="w-full px-3 py-2 bg-white/20 border border-white/30 rounded-xl text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-white/40 focus:border-transparent transition-all duration-300 backdrop-blur-sm"
+                  className="w-full px-4 py-3 md:py-4 bg-white/20 border border-white/30 rounded-xl text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-white/40 focus:border-transparent transition-all duration-300 backdrop-blur-sm text-base"
                   value={category}
                   onChange={(e) => {
                     setCategory(e.target.value);
@@ -222,9 +227,9 @@ const AddSpot = () => {
               {/* Subcategory Dropdown */}
               {category && (
                 <div>
-                  <label className="block text-white/80 text-sm mb-2">Subcategory</label>
+                  <label className="block text-white/80 text-sm md:text-base mb-2 font-medium">Subcategory</label>
                   <select
-                    className="w-full px-3 py-2 bg-white/20 border border-white/30 rounded-xl text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-white/40 focus:border-transparent transition-all duration-300 backdrop-blur-sm"
+                    className="w-full px-4 py-3 md:py-4 bg-white/20 border border-white/30 rounded-xl text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-white/40 focus:border-transparent transition-all duration-300 backdrop-blur-sm text-base"
                     value={subcategory}
                     onChange={(e) => setSubcategory(e.target.value)}
                   >
@@ -240,23 +245,23 @@ const AddSpot = () => {
 
               {/* Description */}
               <div>
-                <label className="block text-white/80 text-sm mb-2">Description</label>
+                <label className="block text-white/80 text-sm md:text-base mb-2 font-medium">Description</label>
                 <textarea
-                  rows={3}
-                  className="w-full px-3 py-2 bg-white/20 border border-white/30 rounded-xl text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-white/40 focus:border-transparent transition-all duration-300 backdrop-blur-sm"
-                  placeholder="tip for visiting"
+                  rows={4}
+                  className="w-full px-4 py-3 md:py-4 bg-white/20 border border-white/30 rounded-xl text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-white/40 focus:border-transparent transition-all duration-300 backdrop-blur-sm text-base resize-none"
+                  placeholder="Share tips, recommendations, or any useful information about this spot..."
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
                 />
               </div>
 
               {/* Submit Button */}
-              <div className="pt-2">
+              <div className="pt-4 md:pt-6">
                 <button
                   type="button"
                   onClick={handleSubmitSpot}
                   disabled={loading}
-                  className="bg-gradient-to-r from-blue-500/80 to-purple-600/80 hover:from-blue-600/90 hover:to-purple-700/90 text-white font-semibold py-2.5 px-5 rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 w-full"
+                  className="bg-gradient-to-r from-blue-500/80 to-purple-600/80 hover:from-blue-600/90 hover:to-purple-700/90 text-white font-semibold py-3 md:py-4 px-6 md:px-8 rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 w-full text-base md:text-lg disabled:opacity-60 disabled:cursor-not-allowed disabled:transform-none"
                 >
                   {loading ? "Submitting..." : "Submit Spot"}
                 </button>

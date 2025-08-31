@@ -12,8 +12,7 @@ export default function AddProfile() {
   const [loading, setLoading] = useState(false);
   const [user, setUser] = useState(null);
 
-
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
   // Fetch current logged in user
   useEffect(() => {
@@ -81,6 +80,8 @@ export default function AddProfile() {
       alert("Error saving profile: " + error.message);
     } else {
       alert("Profile saved successfully!");
+      // Redirect to Profile page after successful creation
+      navigate("/Profile");
     }
 
     setLoading(false);

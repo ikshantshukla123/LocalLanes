@@ -38,14 +38,14 @@ export default function Signup() {
         return;
       }
       
-             const { data, error } = await supabase.auth.signUp({
-         email: formData.email,
-         password: formData.password,
-         options: {
-           data: { name: formData.name },
-           emailRedirectTo: `${window.location.origin}/home`,
-         },
-       });
+      const { data, error } = await supabase.auth.signUp({
+        email: formData.email,
+        password: formData.password,
+        options: {
+          data: { name: formData.name },
+          emailRedirectTo: `${window.location.origin}/home`,
+        },
+      });
       
       if (error) {
         console.error("Signup error:", error);
@@ -53,12 +53,12 @@ export default function Signup() {
         return;
       }
       
-             if (data?.user && !data?.session) {
-         setSuccessMessage("Check your inbox to confirm your email.");
-       } else if (data?.session) {
-         setSuccessMessage("Account created successfully! Redirecting...");
-         setTimeout(() => navigate("/home"), 2000);
-       }
+      if (data?.user && !data?.session) {
+        setSuccessMessage("Check your inbox to confirm your email.");
+      } else if (data?.session) {
+        setSuccessMessage("Account created successfully! Redirecting...");
+        setTimeout(() => navigate("/home"), 2000);
+      }
     } catch (err) {
       console.error("Unexpected error during signup:", err);
       setErrorMessage("An unexpected error occurred. Please try again.");
@@ -68,73 +68,73 @@ export default function Signup() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 p-6">
-      <div className="w-full max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 p-4 sm:p-6">
+      <div className="w-full max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
 
-
-
-      <div className="text-center md:text-left space-y-6 px-4">
-          <div className="flex items-center justify-center md:justify-start gap-6">
+        {/* LEFT SIDE - Description */}
+        <div className="text-center lg:text-left space-y-4 sm:space-y-6 px-4 order-2 lg:order-1">
+          <div className="flex items-center justify-center lg:justify-start gap-4 sm:gap-6">
             <div className="relative group">
-              <div className="absolute -inset-4 bg-gradient-to-r from-cyan-500/30 via-indigo-500/30 to-purple-500/30 rounded-full blur-2xl group-hover:blur-3xl transition-all duration-500"></div>
-              <div className="absolute -inset-2 bg-gradient-to-r from-emerald-400/20 to-cyan-400/20 rounded-full blur-lg animate-pulse"></div>
+              <div className="absolute -inset-3 sm:-inset-4 bg-gradient-to-r from-cyan-500/30 via-indigo-500/30 to-purple-500/30 rounded-full blur-xl sm:blur-2xl group-hover:blur-2xl sm:group-hover:blur-3xl transition-all duration-500"></div>
+              <div className="absolute -inset-1 sm:-inset-2 bg-gradient-to-r from-emerald-400/20 to-cyan-400/20 rounded-full blur-lg animate-pulse"></div>
               <img 
                 src="/localLanesLogo.png" 
                 alt="Local-Lanes Logo" 
-                className="relative w-24 h-24 md:w-32 md:h-32 object-contain drop-shadow-2xl group-hover:scale-110 transition-all duration-500"
+                className="relative w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-32 lg:h-32 object-contain drop-shadow-2xl group-hover:scale-110 transition-all duration-500"
               />
             </div>
-            <h2 className="text-5xl md:text-7xl font-extrabold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-indigo-300 to-purple-300 animate-gradient-x drop-shadow-lg">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-extrabold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-indigo-300 to-purple-300 animate-gradient-x drop-shadow-lg">
               Local Lanes
             </h2>
           </div>
-          <p className="text-slate-300 text-lg">
+          <p className="text-slate-300 text-base sm:text-lg lg:text-xl">
             Discover the <span className="text-cyan-300 font-semibold">best hangout spots</span>, gyms, restaurants, and hidden gems around your college.
           </p>
-          <p className="text-slate-200/90 text-base leading-relaxed max-w-md">
+          <p className="text-slate-200/90 text-sm sm:text-base leading-relaxed max-w-md mx-auto lg:mx-0">
             Local-Lanes helps you explore recommendations shared by seniors & friends — 
             so you never feel lost again! 🌟
           </p>
           
           {/* Feature highlights */}
-          <div className="space-y-3 mt-8">
+          <div className="space-y-2 sm:space-y-3 mt-6 sm:mt-8">
             <div className="flex items-center gap-3 text-slate-200">
               <div className="w-2 h-2 bg-emerald-400 rounded-full"></div>
-              <span className="text-sm">Exclusive .edu email access</span>
+              <span className="text-sm sm:text-base">Exclusive .edu email access</span>
             </div>
             <div className="flex items-center gap-3 text-slate-200">
               <div className="w-2 h-2 bg-cyan-400 rounded-full"></div>
-              <span className="text-sm">Curated spots by college students</span>
+              <span className="text-sm sm:text-base">Curated spots by college students</span>
             </div>
             <div className="flex items-center gap-3 text-slate-200">
               <div className="w-2 h-2 bg-purple-400 rounded-full"></div>
-              <span className="text-sm">Real photos and honest reviews</span>
+              <span className="text-sm sm:text-base">Real photos and honest reviews</span>
             </div>
             <div className="flex items-center gap-3 text-slate-200">
               <div className="w-2 h-2 bg-pink-400 rounded-full"></div>
-              <span className="text-sm">Community-driven recommendations</span>
+              <span className="text-sm sm:text-base">Community-driven recommendations</span>
             </div>
           </div>
         </div>
 
-        <div className="relative w-full max-w-md mx-auto">
-          <div className="absolute -inset-1 bg-gradient-to-r from-emerald-500/30 via-cyan-500/30 to-blue-500/30 rounded-3xl blur-2xl"></div>
-          <div className="relative backdrop-blur-xl bg-white/10 border border-white/20 shadow-2xl rounded-3xl p-8 animate-fade-in">
-            <h1 className="text-2xl font-semibold text-white text-center">Create account</h1>
-            <p className="text-slate-300 text-center mt-1">Sign up with your .edu email</p>
+        {/* RIGHT SIDE - Form */}
+        <div className="relative w-full max-w-md mx-auto order-1 lg:order-2">
+          <div className="absolute -inset-1 bg-gradient-to-r from-emerald-500/30 via-cyan-500/30 to-blue-500/30 rounded-2xl sm:rounded-3xl blur-xl sm:blur-2xl"></div>
+          <div className="relative backdrop-blur-xl bg-white/10 border border-white/20 shadow-2xl rounded-2xl sm:rounded-3xl p-6 sm:p-8 animate-fade-in">
+            <h1 className="text-xl sm:text-2xl font-semibold text-white text-center">Create account</h1>
+            <p className="text-slate-300 text-center mt-1 text-sm sm:text-base">Sign up with your .edu email</p>
             
             {/* Decorative element */}
             <div className="flex justify-center mt-4">
-              <div className="w-16 h-1 bg-gradient-to-r from-transparent via-emerald-400 to-transparent rounded-full"></div>
+              <div className="w-12 sm:w-16 h-1 bg-gradient-to-r from-transparent via-emerald-400 to-transparent rounded-full"></div>
             </div>
 
             {errorMessage && (
-              <div className="mt-4 text-sm text-red-200 bg-red-500/10 border border-red-500/30 rounded-md px-3 py-2">
+              <div className="mt-4 text-sm text-red-200 bg-red-500/10 border border-red-500/30 rounded-lg px-3 py-2">
                 {errorMessage}
               </div>
             )}
             {successMessage && (
-              <div className="mt-4 text-sm text-emerald-200 bg-emerald-500/10 border border-emerald-500/30 rounded-md px-3 py-2">
+              <div className="mt-4 text-sm text-emerald-200 bg-emerald-500/10 border border-emerald-500/30 rounded-lg px-3 py-2">
                 {successMessage}
               </div>
             )}
@@ -147,7 +147,7 @@ export default function Signup() {
                   name="name"
                   placeholder="Your name"
                   onChange={handleChange}
-                  className="w-full px-4 py-3 rounded-xl bg-white/10 text-white placeholder-slate-300 border border-white/20 focus:outline-none focus:ring-2 focus:ring-emerald-400/50 focus:border-emerald-400/50 transition-all duration-300"
+                  className="w-full px-4 py-3 rounded-xl bg-white/10 text-white placeholder-slate-300 border border-white/20 focus:outline-none focus:ring-2 focus:ring-emerald-400/50 focus:border-emerald-400/50 transition-all duration-300 text-base"
                   required
                 />
               </div>
@@ -158,7 +158,7 @@ export default function Signup() {
                   name="email"
                   placeholder="you@college.edu"
                   onChange={handleChange}
-                  className="w-full px-4 py-3 rounded-xl bg-white/10 text-white placeholder-slate-300 border border-white/20 focus:outline-none focus:ring-2 focus:ring-emerald-400/50 focus:border-emerald-400/50 transition-all duration-300"
+                  className="w-full px-4 py-3 rounded-xl bg-white/10 text-white placeholder-slate-300 border border-white/20 focus:outline-none focus:ring-2 focus:ring-emerald-400/50 focus:border-emerald-400/50 transition-all duration-300 text-base"
                   required
                 />
                 <p className="text-xs text-slate-400">Only .edu email addresses are allowed</p>
@@ -170,7 +170,7 @@ export default function Signup() {
                   name="password"
                   placeholder="Create a password"
                   onChange={handleChange}
-                  className="w-full px-4 py-3 rounded-xl bg-white/10 text-white placeholder-slate-300 border border-white/20 focus:outline-none focus:ring-2 focus:ring-emerald-400/50 focus:border-emerald-400/50 transition-all duration-300"
+                  className="w-full px-4 py-3 rounded-xl bg-white/10 text-white placeholder-slate-300 border border-white/20 focus:outline-none focus:ring-2 focus:ring-emerald-400/50 focus:border-emerald-400/50 transition-all duration-300 text-base"
                   required
                 />
                 <p className="text-xs text-slate-400">Minimum 6 characters</p>
@@ -178,7 +178,7 @@ export default function Signup() {
               <button
                 type="submit"
                 disabled={submitting}
-                className="mt-4 inline-flex justify-center items-center gap-2 w-full py-3 rounded-xl bg-gradient-to-r from-emerald-500 to-cyan-500 hover:from-emerald-600 hover:to-cyan-600 text-white font-semibold transition-all duration-300 disabled:opacity-60 disabled:cursor-not-allowed transform hover:scale-[1.02]"
+                className="mt-4 inline-flex justify-center items-center gap-2 w-full py-3 rounded-xl bg-gradient-to-r from-emerald-500 to-cyan-500 hover:from-emerald-600 hover:to-cyan-600 text-white font-semibold transition-all duration-300 disabled:opacity-60 disabled:cursor-not-allowed transform hover:scale-[1.02] text-base"
               >
                 {submitting ? (
                   <>
